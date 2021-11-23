@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/ui/ui.dart';
 import '../../../get_core/get_core.dart';
 
 extension Trans on String {

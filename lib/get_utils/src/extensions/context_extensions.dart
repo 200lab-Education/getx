@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/widgets.dart';
 
 import '../platform/platform.dart';
@@ -55,18 +55,6 @@ extension ContextExtensionss on BuildContext {
     return heightTransformer(dividedBy: dividedBy, reducedBy: reducedByH) /
         widthTransformer(dividedBy: dividedBy, reducedBy: reducedByW);
   }
-
-  /// similar to [MediaQuery.of(context).padding]
-  ThemeData get theme => Theme.of(this);
-
-  /// Check if dark mode theme is enable
-  bool get isDarkMode => (theme.brightness == Brightness.dark);
-
-  /// give access to Theme.of(context).iconTheme.color
-  Color? get iconColor => theme.iconTheme.color;
-
-  /// similar to [MediaQuery.of(context).padding]
-  TextTheme get textTheme => Theme.of(this).textTheme;
 
   /// similar to [MediaQuery.of(context).padding]
   EdgeInsets get mediaQueryPadding => MediaQuery.of(this).padding;

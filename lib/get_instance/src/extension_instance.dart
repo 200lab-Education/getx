@@ -19,7 +19,7 @@ extension Inst on GetInterface {
   /// If you need to make use of GetxController's life-cycle
   /// (`onInit(), onStart(), onClose()`)
   /// [fenix] is a great choice to mix with `GetBuilder` and `GetX` widgets,
-  /// and/or [GetMaterialApp] Navigation.
+  /// and/or [GetMPApp] Navigation.
   ///
   /// You could use `Get.lazyPut(fenix:true)` in your app's `main()` instead of
   /// `Bindings` for each [GetPage].
@@ -94,7 +94,7 @@ extension Inst on GetInterface {
   ///
   /// - `clearFactory` clears the callbacks registered by `Get.lazyPut()`
   /// - `clearRouteBindings` clears Instances associated with Routes when using
-  ///   [GetMaterialApp].
+  ///   [GetMPApp].
   // bool reset(
   //         {@deprecated bool clearFactory = true,
   //         @deprecated bool clearRouteBindings = true}) =>

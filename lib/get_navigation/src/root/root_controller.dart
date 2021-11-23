@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../../get_state_manager/get_state_manager.dart';
 import '../../../get_utils/get_utils.dart';
 import '../routes/custom_transition.dart';
@@ -8,9 +8,6 @@ import '../routes/transitions_type.dart';
 class GetMaterialController extends GetxController {
   bool testMode = false;
   Key? unikey;
-  ThemeData? theme;
-  ThemeData? darkTheme;
-  ThemeMode? themeMode;
 
   bool defaultPopGesture = GetPlatform.isIOS;
   bool defaultOpaqueRoute = true;
@@ -39,24 +36,6 @@ class GetMaterialController extends GetxController {
   }
 
   Map<dynamic, GlobalKey<NavigatorState>> keys = {};
-
-  void setTheme(ThemeData value) {
-    if (darkTheme == null) {
-      theme = value;
-    } else {
-      if (value.brightness == Brightness.light) {
-        theme = value;
-      } else {
-        darkTheme = value;
-      }
-    }
-    update();
-  }
-
-  void setThemeMode(ThemeMode value) {
-    themeMode = value;
-    update();
-  }
 
   void restartApp() {
     unikey = UniqueKey();

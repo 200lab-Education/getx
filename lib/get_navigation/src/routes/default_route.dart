@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../get.dart';
 import '../router_report.dart';
@@ -123,7 +123,7 @@ class GetPageRoute<T> extends PageRoute<T>
   final String? title;
 
   @override
-  String get debugLabel => '${super.debugLabel}(${settings.name})';
+  String get debugLabel => '(${settings.name})';
 
   @override
   final double Function(BuildContext context)? gestureWidth;

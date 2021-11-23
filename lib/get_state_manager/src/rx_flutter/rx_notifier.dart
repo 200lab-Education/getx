@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../instance_manager.dart';
@@ -140,7 +140,7 @@ extension StateExt<T> on StateMixin<T> {
   }) {
     return SimpleBuilder(builder: (_) {
       if (status.isLoading) {
-        return onLoading ?? const Center(child: CircularProgressIndicator());
+        return onLoading ?? const Center();
       } else if (status.isError) {
         return onError != null
             ? onError(status.errorMessage)

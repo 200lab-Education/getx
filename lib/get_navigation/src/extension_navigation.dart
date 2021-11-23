@@ -1,6 +1,6 @@
-import 'dart:ui' as ui;
+import 'package:flutter/ui/ui.dart' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../get_core/get_core.dart';
@@ -12,203 +12,12 @@ import 'root/parse_route.dart';
 import 'root/root_controller.dart';
 import 'routes/transitions_type.dart';
 
-extension ExtensionSnackbar on GetInterface {
-  void rawSnackbar({
-    String? title,
-    String? message,
-    Widget? titleText,
-    Widget? messageText,
-    Widget? icon,
-    bool instantInit = true,
-    bool shouldIconPulse = true,
-    double? maxWidth,
-    EdgeInsets margin = const EdgeInsets.all(0.0),
-    EdgeInsets padding = const EdgeInsets.all(16),
-    double borderRadius = 0.0,
-    Color? borderColor,
-    double borderWidth = 1.0,
-    Color backgroundColor = const Color(0xFF303030),
-    Color? leftBarIndicatorColor,
-    List<BoxShadow>? boxShadows,
-    Gradient? backgroundGradient,
-    Widget? mainButton,
-    OnTap? onTap,
-    Duration duration = const Duration(seconds: 3),
-    bool isDismissible = true,
-    SnackDismissDirection dismissDirection = SnackDismissDirection.VERTICAL,
-    bool showProgressIndicator = false,
-    AnimationController? progressIndicatorController,
-    Color? progressIndicatorBackgroundColor,
-    Animation<Color>? progressIndicatorValueColor,
-    SnackPosition snackPosition = SnackPosition.BOTTOM,
-    SnackStyle snackStyle = SnackStyle.FLOATING,
-    Curve forwardAnimationCurve = Curves.easeOutCirc,
-    Curve reverseAnimationCurve = Curves.easeOutCirc,
-    Duration animationDuration = const Duration(seconds: 1),
-    SnackbarStatusCallback? snackbarStatus,
-    double? barBlur = 0.0,
-    double overlayBlur = 0.0,
-    Color? overlayColor,
-    Form? userInputForm,
-  }) async {
-    final getBar = GetBar(
-      snackbarStatus: snackbarStatus,
-      title: title,
-      message: message,
-      titleText: titleText,
-      messageText: messageText,
-      snackPosition: snackPosition,
-      borderRadius: borderRadius,
-      margin: margin,
-      duration: duration,
-      barBlur: barBlur,
-      backgroundColor: backgroundColor,
-      icon: icon,
-      shouldIconPulse: shouldIconPulse,
-      maxWidth: maxWidth,
-      padding: padding,
-      borderColor: borderColor,
-      borderWidth: borderWidth,
-      leftBarIndicatorColor: leftBarIndicatorColor,
-      boxShadows: boxShadows,
-      backgroundGradient: backgroundGradient,
-      mainButton: mainButton,
-      onTap: onTap,
-      isDismissible: isDismissible,
-      dismissDirection: dismissDirection,
-      showProgressIndicator: showProgressIndicator,
-      progressIndicatorController: progressIndicatorController,
-      progressIndicatorBackgroundColor: progressIndicatorBackgroundColor,
-      progressIndicatorValueColor: progressIndicatorValueColor,
-      snackStyle: snackStyle,
-      forwardAnimationCurve: forwardAnimationCurve,
-      reverseAnimationCurve: reverseAnimationCurve,
-      animationDuration: animationDuration,
-      overlayBlur: overlayBlur,
-      overlayColor: overlayColor,
-      userInputForm: userInputForm,
-    );
-
-    if (instantInit) {
-      getBar.show();
-    } else {
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
-        getBar.show();
-      });
-    }
-  }
-
-  Future<T?>? showSnackbar<T>(GetBar snackbar) {
-    return key.currentState?.push(SnackRoute<T>(snack: snackbar));
-  }
-
-  void snackbar<T>(
-    String title,
-    String message, {
-    Color? colorText,
-    Duration? duration,
-
-    /// with instantInit = false you can put snackbar on initState
-    bool instantInit = true,
-    SnackPosition? snackPosition,
-    Widget? titleText,
-    Widget? messageText,
-    Widget? icon,
-    bool? shouldIconPulse,
-    double? maxWidth,
-    EdgeInsets? margin,
-    EdgeInsets? padding,
-    double? borderRadius,
-    Color? borderColor,
-    double? borderWidth,
-    Color? backgroundColor,
-    Color? leftBarIndicatorColor,
-    List<BoxShadow>? boxShadows,
-    Gradient? backgroundGradient,
-    TextButton? mainButton,
-    OnTap? onTap,
-    bool? isDismissible,
-    bool? showProgressIndicator,
-    SnackDismissDirection? dismissDirection,
-    AnimationController? progressIndicatorController,
-    Color? progressIndicatorBackgroundColor,
-    Animation<Color>? progressIndicatorValueColor,
-    SnackStyle? snackStyle,
-    Curve? forwardAnimationCurve,
-    Curve? reverseAnimationCurve,
-    Duration? animationDuration,
-    double? barBlur,
-    double? overlayBlur,
-    SnackbarStatusCallback? snackbarStatus,
-    Color? overlayColor,
-    Form? userInputForm,
-  }) async {
-    final getBar = GetBar(
-        snackbarStatus: snackbarStatus,
-        titleText: titleText ??
-            Text(
-              title,
-              style: TextStyle(
-                color: colorText ?? iconColor ?? Colors.black,
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-              ),
-            ),
-        messageText: messageText ??
-            Text(
-              message,
-              style: TextStyle(
-                color: colorText ?? iconColor ?? Colors.black,
-                fontWeight: FontWeight.w300,
-                fontSize: 14,
-              ),
-            ),
-        snackPosition: snackPosition ?? SnackPosition.TOP,
-        borderRadius: borderRadius ?? 15,
-        margin: margin ?? EdgeInsets.symmetric(horizontal: 10),
-        duration: duration ?? Duration(seconds: 3),
-        barBlur: barBlur ?? 7.0,
-        backgroundColor: backgroundColor ?? Colors.grey.withOpacity(0.2),
-        icon: icon,
-        shouldIconPulse: shouldIconPulse ?? true,
-        maxWidth: maxWidth,
-        padding: padding ?? EdgeInsets.all(16),
-        borderColor: borderColor,
-        borderWidth: borderWidth,
-        leftBarIndicatorColor: leftBarIndicatorColor,
-        boxShadows: boxShadows,
-        backgroundGradient: backgroundGradient,
-        mainButton: mainButton,
-        onTap: onTap,
-        isDismissible: isDismissible ?? true,
-        dismissDirection: dismissDirection ?? SnackDismissDirection.VERTICAL,
-        showProgressIndicator: showProgressIndicator ?? false,
-        progressIndicatorController: progressIndicatorController,
-        progressIndicatorBackgroundColor: progressIndicatorBackgroundColor,
-        progressIndicatorValueColor: progressIndicatorValueColor,
-        snackStyle: snackStyle ?? SnackStyle.FLOATING,
-        forwardAnimationCurve: forwardAnimationCurve ?? Curves.easeOutCirc,
-        reverseAnimationCurve: reverseAnimationCurve ?? Curves.easeOutCirc,
-        animationDuration: animationDuration ?? Duration(seconds: 1),
-        overlayBlur: overlayBlur ?? 0.0,
-        overlayColor: overlayColor ?? Colors.transparent,
-        userInputForm: userInputForm);
-
-    if (instantInit) {
-      showSnackbar<T>(getBar);
-    } else {
-      routing.isSnackbar = true;
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
-        showSnackbar<T>(getBar);
-      });
-    }
-  }
-}
+extension ExtensionSnackbar on GetInterface {}
 
 extension OverlayExt on GetInterface {
   Future<T> showOverlay<T>({
     required Future<T> Function() asyncFunction,
-    Color opacityColor = Colors.black,
+    Color opacityColor = const Color(0),
     Widget? loadingWidget,
     double opacity = .5,
   }) async {
@@ -268,38 +77,7 @@ extension ExtensionDialog on GetInterface {
     String? name,
     RouteSettings? routeSettings,
   }) {
-    assert(debugCheckHasMaterialLocalizations(context!));
-
-    //  final theme = Theme.of(context, shadowThemeOnly: true);
-    final theme = Theme.of(context!);
-    return generalDialog<T>(
-      pageBuilder: (buildContext, animation, secondaryAnimation) {
-        final pageChild = widget;
-        Widget dialog = Builder(builder: (context) {
-          return Theme(data: theme, child: pageChild);
-        });
-        if (useSafeArea) {
-          dialog = SafeArea(child: dialog);
-        }
-        return dialog;
-      },
-      barrierDismissible: barrierDismissible,
-      barrierLabel: MaterialLocalizations.of(context!).modalBarrierDismissLabel,
-      barrierColor: barrierColor ?? Colors.black54,
-      transitionDuration: transitionDuration ?? defaultDialogTransitionDuration,
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: CurvedAnimation(
-            parent: animation,
-            curve: transitionCurve ?? defaultDialogTransitionCurve,
-          ),
-          child: child,
-        );
-      },
-      navigatorKey: navigatorKey,
-      routeSettings:
-          routeSettings ?? RouteSettings(arguments: arguments, name: name),
-    );
+    throw 'todo';
   }
 
   /// Api from showGeneralDialog with no context
@@ -364,100 +142,7 @@ extension ExtensionDialog on GetInterface {
     // the navigator used to push the dialog
     GlobalKey<NavigatorState>? navigatorKey,
   }) {
-    var leanCancel = onCancel != null || textCancel != null;
-    var leanConfirm = onConfirm != null || textConfirm != null;
-    actions ??= [];
-
-    if (cancel != null) {
-      actions.add(cancel);
-    } else {
-      if (leanCancel) {
-        actions.add(TextButton(
-          style: TextButton.styleFrom(
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    color: buttonColor ?? theme.accentColor,
-                    width: 2,
-                    style: BorderStyle.solid),
-                borderRadius: BorderRadius.circular(100)),
-          ),
-          onPressed: () {
-            onCancel?.call();
-            back();
-          },
-          child: Text(
-            textCancel ?? "Cancel",
-            style: TextStyle(color: cancelTextColor ?? theme.accentColor),
-          ),
-        ));
-      }
-    }
-    if (confirm != null) {
-      actions.add(confirm);
-    } else {
-      if (leanConfirm) {
-        actions.add(TextButton(
-            style: TextButton.styleFrom(
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              backgroundColor: buttonColor ?? theme.accentColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100)),
-            ),
-            child: Text(
-              textConfirm ?? "Ok",
-              style:
-                  TextStyle(color: confirmTextColor ?? theme.backgroundColor),
-            ),
-            onPressed: () {
-              onConfirm?.call();
-            }));
-      }
-    }
-
-    Widget baseAlertDialog = AlertDialog(
-      titlePadding: titlePadding ?? EdgeInsets.all(8),
-      contentPadding: contentPadding ?? EdgeInsets.all(8),
-
-      backgroundColor: backgroundColor ?? theme.dialogBackgroundColor,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(radius))),
-      title: Text(title, textAlign: TextAlign.center, style: titleStyle),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          content ??
-              Text(middleText,
-                  textAlign: TextAlign.center, style: middleTextStyle),
-          SizedBox(height: 16),
-          ButtonTheme(
-            minWidth: 78.0,
-            height: 34.0,
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 8,
-              runSpacing: 8,
-              children: actions,
-            ),
-          )
-        ],
-      ),
-      // actions: actions, // ?? <Widget>[cancelButton, confirmButton],
-      buttonPadding: EdgeInsets.zero,
-    );
-
-    return dialog<T>(
-      onWillPop != null
-          ? WillPopScope(
-              onWillPop: onWillPop,
-              child: baseAlertDialog,
-            )
-          : baseAlertDialog,
-      barrierDismissible: barrierDismissible,
-      navigatorKey: navigatorKey,
-    );
+    throw 'todo';
   }
 }
 
@@ -479,31 +164,7 @@ extension ExtensionBottomSheet on GetInterface {
     Duration? enterBottomSheetDuration,
     Duration? exitBottomSheetDuration,
   }) {
-    return Navigator.of(overlayContext!, rootNavigator: useRootNavigator)
-        .push(GetModalBottomSheetRoute<T>(
-      builder: (_) => bottomsheet,
-      isPersistent: persistent,
-      // theme: Theme.of(key.currentContext, shadowThemeOnly: true),
-      theme: Theme.of(key.currentContext!),
-      isScrollControlled: isScrollControlled,
-
-      barrierLabel: MaterialLocalizations.of(key.currentContext!)
-          .modalBarrierDismissLabel,
-
-      backgroundColor: backgroundColor ?? Colors.transparent,
-      elevation: elevation,
-      shape: shape,
-      removeTop: ignoreSafeArea ?? true,
-      clipBehavior: clipBehavior,
-      isDismissible: isDismissible,
-      modalBarrierColor: barrierColor,
-      settings: settings,
-      enableDrag: enableDrag,
-      enterBottomSheetDuration:
-          enterBottomSheetDuration ?? const Duration(milliseconds: 250),
-      exitBottomSheetDuration:
-          exitBottomSheetDuration ?? const Duration(milliseconds: 200),
-    ));
+    throw 'todo';
   }
 }
 
@@ -1079,14 +740,6 @@ you can only use widgets and widget functions here''';
 
   void appUpdate() => _getxController.update();
 
-  void changeTheme(ThemeData theme) {
-    _getxController.setTheme(theme);
-  }
-
-  void changeThemeMode(ThemeMode themeMode) {
-    _getxController.setThemeMode(themeMode);
-  }
-
   GlobalKey<NavigatorState>? addKey(GlobalKey<NavigatorState> newKey) {
     return _getxController.addKey(newKey);
   }
@@ -1164,15 +817,6 @@ you can only use widgets and widget functions here''';
     return overlay;
   }
 
-  /// give access to Theme.of(context)
-  ThemeData get theme {
-    var _theme = ThemeData.fallback();
-    if (context != null) {
-      _theme = Theme.of(context!);
-    }
-    return _theme;
-  }
-
   ///The current [WidgetsBinding]
   WidgetsBinding? get engine {
     if (WidgetsBinding.instance == null) {
@@ -1182,7 +826,7 @@ you can only use widgets and widget functions here''';
   }
 
   /// The window to which this binding is bound.
-  ui.SingletonFlutterWindow get window => ui.window;
+  ui.Window get window => ui.window;
 
   Locale? get deviceLocale => ui.window.locale;
 
@@ -1208,21 +852,8 @@ you can only use widgets and widget functions here''';
   ///The system-reported text scale.
   double get textScaleFactor => ui.window.textScaleFactor;
 
-  /// give access to TextTheme.of(context)
-  TextTheme get textTheme => theme.textTheme;
-
   /// give access to Mediaquery.of(context)
   MediaQueryData get mediaQuery => MediaQuery.of(context!);
-
-  /// Check if dark mode theme is enable
-  bool get isDarkMode => (theme.brightness == Brightness.dark);
-
-  /// Check if dark mode theme is enable on platform on android Q+
-  bool get isPlatformDarkMode =>
-      (ui.window.platformBrightness == Brightness.dark);
-
-  /// give access to Theme.of(context).iconTheme.color
-  Color? get iconColor => theme.iconTheme.color;
 
   /// give access to FocusScope.of(context)
   FocusNode? get focusScope => FocusManager.instance.primaryFocus;

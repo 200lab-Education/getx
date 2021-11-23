@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../get_state_manager.dart';
 import 'get_state.dart';
 

@@ -5,7 +5,6 @@ import '../../../../instance_manager.dart';
 import '../../../get_navigation.dart';
 import '../../dialog/dialog_route.dart';
 import '../../router_report.dart';
-import '../../snackbar/snack_route.dart';
 import '../default_route.dart';
 
 class Routing {
@@ -51,10 +50,6 @@ String? _extractRouteName(Route? route) {
     return 'DIALOG ${route.hashCode}';
   }
 
-  if (route is GetModalBottomSheetRoute) {
-    return 'BOTTOMSHEET ${route.hashCode}';
-  }
-
   return null;
 }
 
@@ -78,9 +73,9 @@ class _RouteData {
     return _RouteData(
       name: _extractRouteName(route),
       isGetPageRoute: route is GetPageRoute,
-      isSnackbar: route is SnackRoute,
+      isSnackbar: false,
       isDialog: route is GetDialogRoute,
-      isBottomSheet: route is GetModalBottomSheetRoute,
+      isBottomSheet: false,
     );
   }
 }

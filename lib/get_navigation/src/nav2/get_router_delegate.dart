@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../../get.dart';
 import '../../../get_state_manager/src/simple/list_notifier.dart';
 
@@ -69,9 +69,7 @@ class GetDelegate extends RouterDelegate<GetNavConfig>
   }) : notFoundRoute = notFoundRoute ??
             GetPage(
               name: '/404',
-              page: () => Scaffold(
-                body: Text('Route not found'),
-              ),
+              page: () => Container(),
             ) {
     Get.log('GetDelegate is created !');
   }

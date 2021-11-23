@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'dart:ui';
+import 'package:flutter/ui/ui.dart';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../../get.dart';
 
 import 'default_transitions.dart';
@@ -65,14 +65,6 @@ Cannot read the previousTitle for a route that has not yet been installed''',
 
   @override
   void didChangePrevious(Route<dynamic>? previousRoute) {
-    final previousTitleString = previousRoute is CupertinoRouteTransitionMixin
-        ? previousRoute.title
-        : null;
-    if (_previousTitle == null) {
-      _previousTitle = ValueNotifier<String?>(previousTitleString);
-    } else {
-      _previousTitle!.value = previousTitleString;
-    }
     super.didChangePrevious(previousRoute);
   }
 
@@ -90,12 +82,7 @@ Cannot read the previousTitle for a route that has not yet been installed''',
 
   @override
   bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
-    // Don't perform outgoing animation if the next route is a
-    // fullscreen dialog.
-
-    return nextRoute is GetPageRouteTransitionMixin &&
-        !nextRoute.fullscreenDialog &&
-        nextRoute.showCupertinoParallax;
+    return false;
   }
 
   /// True if an iOS-style back swipe pop gesture is currently
@@ -146,14 +133,6 @@ Cannot read the previousTitle for a route that has not yet been installed''',
     if (route.hasScopedWillPopCallback) return false;
     // Fullscreen dialogs aren't dismissible by back swipe.
     if (route.fullscreenDialog) return false;
-    // If we're in an animation already, we cannot be manually swiped.
-    if (route.animation!.status != AnimationStatus.completed) return false;
-    // If we're being popped into, we also cannot be swiped until the pop above
-    // it completes. This translates to our secondary animation being
-    // dismissed.
-    if (route.secondaryAnimation!.status != AnimationStatus.dismissed) {
-      return false;
-    }
     // If we're in a gesture already, we cannot start another.
     if (isPopGestureInProgress(route)) return false;
 
@@ -178,12 +157,7 @@ Cannot read the previousTitle for a route that has not yet been installed''',
   // drag events.
   static CupertinoBackGestureController<T> _startPopGesture<T>(
       PageRoute<T> route) {
-    assert(_isPopGestureEnabled(route));
-
-    return CupertinoBackGestureController<T>(
-      navigator: route.navigator!,
-      controller: route.controller!, // protected access
-    );
+    throw 'todo';
   }
 
   /// Returns a [CupertinoFullscreenDialogTransition] if [route] is a full
@@ -217,14 +191,7 @@ Cannot read the previousTitle for a route that has not yet been installed''',
     final finalCurve = route.curve ?? Get.defaultTransitionCurve;
     final hasCurve = route.curve != null;
     if (route.fullscreenDialog && route.transition == null) {
-      return CupertinoFullscreenDialogTransition(
-        primaryRouteAnimation: hasCurve
-            ? CurvedAnimation(parent: animation, curve: finalCurve)
-            : animation,
-        secondaryRouteAnimation: secondaryAnimation,
-        child: child,
-        linearTransition: linearTransition,
-      );
+      throw 'todo';
     } else {
       if (route.customTransition != null) {
         return route.customTransition!.buildTransition(
@@ -388,18 +355,7 @@ Cannot read the previousTitle for a route that has not yet been installed''',
                   : child);
 
         case Transition.cupertino:
-          return CupertinoPageTransition(
-            primaryRouteAnimation: animation,
-            secondaryRouteAnimation: secondaryAnimation,
-            linearTransition: linearTransition,
-            child: CupertinoBackGestureDetector<T>(
-              gestureWidth:
-                  route.gestureWidth?.call(context) ?? _kBackGestureWidth,
-              enabledCallback: () => _isPopGestureEnabled<T>(route),
-              onStartPopGesture: () => _startPopGesture<T>(route),
-              child: child,
-            ),
-          );
+          throw 'todo';
 
         case Transition.size:
           return SizeTransitions().buildTransitions(
@@ -418,49 +374,13 @@ Cannot read the previousTitle for a route that has not yet been installed''',
                   : child);
 
         case Transition.fade:
-          return FadeUpwardsPageTransitionsBuilder().buildTransitions(
-              route,
-              context,
-              animation,
-              secondaryAnimation,
-              route.popGesture ?? Get.defaultPopGesture
-                  ? CupertinoBackGestureDetector<T>(
-                      gestureWidth: route.gestureWidth?.call(context) ??
-                          _kBackGestureWidth,
-                      enabledCallback: () => _isPopGestureEnabled<T>(route),
-                      onStartPopGesture: () => _startPopGesture<T>(route),
-                      child: child)
-                  : child);
+          throw 'unimplemented';
 
         case Transition.topLevel:
-          return ZoomPageTransitionsBuilder().buildTransitions(
-              route,
-              context,
-              animation,
-              secondaryAnimation,
-              route.popGesture ?? Get.defaultPopGesture
-                  ? CupertinoBackGestureDetector<T>(
-                      gestureWidth: route.gestureWidth?.call(context) ??
-                          _kBackGestureWidth,
-                      enabledCallback: () => _isPopGestureEnabled<T>(route),
-                      onStartPopGesture: () => _startPopGesture<T>(route),
-                      child: child)
-                  : child);
+          throw 'unimplemented';
 
         case Transition.native:
-          return PageTransitionsTheme().buildTransitions(
-              route,
-              context,
-              iosAnimation,
-              secondaryAnimation,
-              route.popGesture ?? Get.defaultPopGesture
-                  ? CupertinoBackGestureDetector<T>(
-                      gestureWidth: route.gestureWidth?.call(context) ??
-                          _kBackGestureWidth,
-                      enabledCallback: () => _isPopGestureEnabled<T>(route),
-                      onStartPopGesture: () => _startPopGesture<T>(route),
-                      child: child)
-                  : child);
+          throw 'unimplemented';
 
         default:
           if (Get.customTransition != null) {
@@ -468,19 +388,7 @@ Cannot read the previousTitle for a route that has not yet been installed''',
                 route.alignment, animation, secondaryAnimation, child);
           }
 
-          return PageTransitionsTheme().buildTransitions(
-              route,
-              context,
-              iosAnimation,
-              secondaryAnimation,
-              route.popGesture ?? Get.defaultPopGesture
-                  ? CupertinoBackGestureDetector<T>(
-                      gestureWidth: route.gestureWidth?.call(context) ??
-                          _kBackGestureWidth,
-                      enabledCallback: () => _isPopGestureEnabled<T>(route),
-                      onStartPopGesture: () => _startPopGesture<T>(route),
-                      child: child)
-                  : child);
+          throw 'unimplemented';
       }
     }
   }
