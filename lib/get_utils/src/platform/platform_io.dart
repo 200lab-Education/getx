@@ -4,18 +4,17 @@ import 'dart:io';
 class GeneralPlatform {
   static bool get isWeb => false;
 
-  static bool get isMacOS => Platform.isMacOS;
+  static bool get isMacOS => false;
 
-  static bool get isWindows => Platform.isWindows;
+  static bool get isWindows => false;
 
-  static bool get isLinux => Platform.isLinux;
+  static bool get isLinux => false;
 
-  static bool get isAndroid => Platform.isAndroid;
+  static bool get isAndroid => false;
 
-  static bool get isIOS => Platform.isIOS;
+  static bool get isIOS => false;
 
-  static bool get isFuchsia => Platform.isFuchsia;
+  static bool get isFuchsia => false;
 
-  static bool get isDesktop =>
-      Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+  static bool get isDesktop => false;
 }

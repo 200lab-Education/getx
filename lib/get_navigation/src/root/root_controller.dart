@@ -9,7 +9,7 @@ class GetMaterialController extends GetxController {
   bool testMode = false;
   Key? unikey;
 
-  bool defaultPopGesture = GetPlatform.isIOS;
+  bool defaultPopGesture = false;
   bool defaultOpaqueRoute = true;
 
   Transition? defaultTransition;
